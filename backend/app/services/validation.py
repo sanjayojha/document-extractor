@@ -1,6 +1,6 @@
 import magic
 
-from app.core.config import Settings
+from app.core.config import settings
 
 
 class UploadValidationError(Exception):
@@ -10,10 +10,10 @@ class UploadValidationError(Exception):
         super().__init__(message)
 
 def validate_file_size(size_bytes: int) -> None:
-    max_bytes = Settings.max_upload_size_mb * 1024 * 1024
+    max_bytes = settings.max_upload_size_mb * 1024 * 1024
     if size_bytes > max_bytes:
         raise UploadValidationError(
-            f"File exceeds maximum size of {Settings.max_upload_size_mb}MB",
+            f"File exceeds maximum size of {settings.max_upload_size_mb}MB",
             413
         )
     
@@ -29,10 +29,10 @@ def  validate_content_type(content: bytes) -> str:
     Returns the detected content type if valid, raises otherwise.
     """
     detected_type = magic.from_buffer(content, mime=True)
-    if detected_type not in Settings.allowed_content_types:
+    if detected_type not in settings.allowed_content_types:
         raise UploadValidationError(
             f"File type '{detected_type}' is not supported. "
-            f"Allowed types: {', '.join(Settings.allowed_content_types)}",
+            f"Allowed types: {', '.join(settings.allowed_content_types)}",
             415
         )
     return detected_type
