@@ -8,3 +8,5 @@ storage/*
 .ruff_cache/
 *.egg-info/
 notes.md
+.coverage
+htmlcov/

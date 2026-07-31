@@ -12,3 +12,6 @@ def build_storage_path(document_id: uuid.UUID, original_filename: str) -> Path:
 def save_file(path: Path, content: bytes) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_bytes(content)
+
+def read_file(path: Path) -> bytes:
+    return path.read_bytes()
